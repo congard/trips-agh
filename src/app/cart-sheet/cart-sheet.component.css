@@ -1,0 +1,19 @@
+.item-details {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.cart-sheet-footer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.cart-sheet-footer > span {
+    text-align: right;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 8px;
+}

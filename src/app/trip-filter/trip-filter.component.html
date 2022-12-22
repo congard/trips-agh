@@ -1,0 +1,64 @@
+<h1>Filtr</h1>
+
+<h2>Kraj</h2>
+
+<app-chips-multi-select
+    selectedColor="#e91e63"
+    [values]="collectCountries()"
+    (onSelectedEvent)="onCountrySelected($event)">
+</app-chips-multi-select>
+
+<br>
+<h2>Ocena</h2>
+
+<app-chips-multi-select
+    selectedColor="#e91e63"
+    [values]="collectRatings()"
+    [stringifier]="ratingStringifier"
+    (onSelectedEvent)="onRatingSelected($event)">
+</app-chips-multi-select>
+
+<br>
+<h2>Data</h2>
+
+<mat-form-field class="datePicker" appearance="fill">
+    <mat-label>Data rozpoczęcia – data końca</mat-label>
+    <mat-hint>DD/MM/YYYY</mat-hint>
+
+    <mat-date-range-input [rangePicker]="picker">
+        <input
+            matStartDate placeholder="Start date" required
+            [(ngModel)]="dateStart">
+        <input
+            matEndDate placeholder="End date" required
+            [(ngModel)]="dateEnd">
+    </mat-date-range-input>
+
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+
+<br><br>
+<h2>Cena</h2>
+
+<div class="sliderContainer">
+    <label>{{ priceFormatter(priceMin) }}</label>
+
+    <mat-slider
+        class="priceSlider"
+        [min]="priceMin"
+        [max]="priceMax"
+        step="10"
+        discrete
+        [displayWith]="priceFormatter">
+
+        <input [value]="priceStart"
+               [(ngModel)]="priceStart" matSliderStartThumb>
+
+        <input [value]="priceEnd"
+               [(ngModel)]="priceEnd" matSliderEndThumb>
+
+    </mat-slider>
+
+    <label>{{ priceFormatter(priceMax) }}</label>
+</div>

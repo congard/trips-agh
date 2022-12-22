@@ -1,0 +1,106 @@
+<h2 mat-dialog-title>Dodaj wycieczkę</h2>
+
+<mat-dialog-content class="mat-typography">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Nazwa</mat-label>
+        <input
+            matInput
+            required
+            [(ngModel)]="tripData.name"
+            [errorStateMatcher]="notEmptyMatcher">
+        <mat-error *ngIf="!tripData.isNameValid().isValid">
+            {{ tripData.isNameValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Kraj</mat-label>
+        <input
+            matInput required
+            [(ngModel)]="tripData.country"
+            [errorStateMatcher]="notEmptyMatcher">
+        <mat-error *ngIf="!tripData.isCountryValid().isValid">
+            {{ tripData.isCountryValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Data rozpoczęcia – data końca</mat-label>
+        <mat-hint>DD/MM/YYYY</mat-hint>
+
+        <mat-date-range-input [rangePicker]="picker">
+            <input
+                matStartDate placeholder="Start date" required
+                [(ngModel)]="tripData.startDate"
+                [errorStateMatcher]="notEmptyMatcher">
+            <input
+                matEndDate placeholder="End date" required
+                [(ngModel)]="tripData.endDate"
+                [errorStateMatcher]="notEmptyMatcher">
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="!tripData.isStartDateValid().isValid">
+            {{ tripData.isStartDateValid().message }}
+        </mat-error>
+
+        <mat-error *ngIf="!tripData.isEndDateValid().isValid">
+            {{ tripData.isEndDateValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Cena</mat-label>
+        <input
+            matInput required type="number" class="price"
+            [(ngModel)]="tripData.unitPrice"
+            [errorStateMatcher]="unitPriceMatcher">
+        <span matTextPrefix>€</span>
+        <mat-error *ngIf="!tripData.isUnitPriceValid().isValid">
+            {{ tripData.isUnitPriceValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Ilość</mat-label>
+        <input
+            matInput required type="number" class="amount"
+            [(ngModel)]="tripData.amount"
+            [errorStateMatcher]="amountMatcher">
+        <mat-error *ngIf="!tripData.isAmountValid().isValid">
+            {{ tripData.isAmountValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Opis</mat-label>
+        <textarea
+            matInput required
+            [(ngModel)]="tripData.desc"
+            [errorStateMatcher]="notEmptyMatcher">
+        </textarea>
+        <mat-error *ngIf="!tripData.isDescValid().isValid">
+            {{ tripData.isDescValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Link do zdjęcia</mat-label>
+        <input
+            matInput required
+            [(ngModel)]="tripData.img"
+            [errorStateMatcher]="notEmptyMatcher">
+        <mat-error *ngIf="!tripData.isImgValid().isValid">
+            {{ tripData.isImgValid().message }}
+        </mat-error>
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined">Cofnij</button>
+    <button mat-button (click)="onAdd()" cdkFocusInitial>Dodaj</button>
+</mat-dialog-actions>

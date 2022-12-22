@@ -1,0 +1,230 @@
+@use '@angular/material' as mat;
+@import "@angular/material/theming";
+
+$my-primary: mat.define-palette(mat.$pink-palette, 500);
+$my-accent: mat.define-palette(mat.$blue-gray-palette, 500);
+
+$color_1: white;
+$color_2: #e66c67;
+$textColor: #b3b3b3;
+$color_4: #fafafa;
+$color_5: darkred;
+$font-family_1: inherit;
+$background-color_1: #fafafa;
+
+$navHeight: 56px;
+
+#content {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+    "header header"
+    "sidebar main"
+    ". main"
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    background: mat.get-color-from-palette($my-primary);
+    width: 100%;
+    height: $navHeight;
+    color: $color_1;
+    align-items: center;
+    z-index: 5;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    grid-area: header;
+}
+
+#title {
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+#status {
+    margin-left: auto;
+    margin-right: 16px;
+}
+
+aside {
+    grid-area: sidebar;
+    background: #424242;
+    position: fixed;
+    top: $navHeight;
+    padding: 24px 32px;
+    width: 20%;
+    height: calc(100vh - $navHeight);
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+main {
+    position: relative;
+    top: $navHeight;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    box-sizing: border-box;
+    margin-left: 5%;
+    margin-right: 5%;
+    min-height: calc(100vh - $navHeight);
+    grid-area: main;
+
+    > mat-card {
+        background: #424242;
+        border: 0 solid transparent;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 256px;
+        min-height: 450px;
+        margin: 14px 18px;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.2s;
+        position: relative;
+
+        &:hover {
+            transform: scale(1.05, 1.05);
+        }
+
+        > * {
+            flex-basis: 0;
+            color: $textColor;
+        }
+
+        > picture {
+            margin: 0;
+            flex-grow: 3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+
+            > img {
+                object-fit: cover;
+                width: 144px;
+                height: 144px;
+                border-radius: 50%;
+            }
+        }
+
+        > section {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 4;
+            margin-left: 16px;
+            margin-right: 16px;
+
+            > header {
+                margin-bottom: 12px;
+
+                > h1 {
+                    margin-bottom: 0;
+                    font-weight: bolder;
+                }
+
+                > p {
+                    color: mat.get-color-from-palette($my-primary);
+                    font-size: smaller;
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    overflow: hidden;
+                }
+            }
+
+            > p {
+                margin: 0;
+                font-size: smaller;
+            }
+
+            > hr {
+                height: 2px;
+                width: 80%;
+                margin-top: auto;
+                border-width: 0;
+                background-color: $textColor;
+                color: $textColor;
+            }
+        }
+
+        > footer {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 16px;
+        }
+    }
+}
+
+.mostExpensiveTrip {
+    box-shadow: 0 0 6px #4caf50 !important;
+}
+
+.leastExpensiveTrip {
+    box-shadow: 0 0 6px #f44336 !important;
+}
+
+.removeTrip {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: color 0.2s;
+    cursor: pointer;
+    scale: 0.65;
+}
+
+.booking-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.cart {
+    background: mat.get-color-from-palette($my-primary);
+    color: $color_1;
+    border: none;
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 50%;
+    font-family: $font-family_1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.25s;
+    cursor: pointer;
+
+    > * {
+        z-index: 1;
+    }
+
+    &:hover {
+        background: mat.get-color-from-palette($my-primary, 800);
+    }
+
+    &:disabled {
+        background: mat.get-color-from-palette($my-primary);
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.btnHidden {
+    opacity: 0 !important;
+    cursor: auto !important;
+}
+
+.tripsNotFound {
+    color: mat.get-color-from-palette($my-accent, 300);
+    margin: auto;
+}

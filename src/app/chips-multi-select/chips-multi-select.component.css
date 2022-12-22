@@ -1,0 +1,4 @@
+mat-chip {
+    cursor: pointer !important;
+    transition: background-color 0.2s;
+}

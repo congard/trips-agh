@@ -1,0 +1,10 @@
+<mat-chip-listbox>
+    <mat-chip
+        *ngFor="let value of values"
+        [style]="'background-color: ' + getColor(value)"
+        (click)="onSelect(value)">
+
+        {{ stringifier(value) }}
+
+    </mat-chip>
+</mat-chip-listbox>

@@ -1,0 +1,20 @@
+<div
+    class="rating-bar"
+    (mouseleave)="previewStars(0)">
+
+    <button
+        *ngFor="let e of [].constructor(starsMaxCount); let i = index"
+        matRipple
+        [matRippleColor]="'#888888'"
+        [class]="canBeRated ? 'starActive' : ''">
+
+        <fa-icon
+            (mouseover)="previewStars(i + 1)"
+            (click)="rate(i + 1)"
+            [style]="'color: ' + getColor()"
+            [icon]="getStars() > i ? starSolid : starRegular">
+        </fa-icon>
+
+    </button>
+
+</div>

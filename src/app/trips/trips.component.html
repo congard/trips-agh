@@ -1,0 +1,87 @@
+<div id="content">
+    <nav class="mat-elevation-z5">
+        <span id="title">Rezerwacja wycieczek</span>
+
+        <span
+            *ngIf="{totalAmount: cart.getTotalAmount()} as variable"
+            [style.color]="variable.totalAmount >= 10 ? '#aaffaa' : ''"
+            id="status">Zarezerwowałeś {{ variable.totalAmount }} wycieczek</span>
+
+        <button
+            mat-icon-button
+            (click)="addTrip()">
+            <mat-icon>add</mat-icon>
+        </button>
+
+        <button
+            mat-icon-button
+            (click)="showCart()">
+            <mat-icon>shopping_cart</mat-icon>
+        </button>
+    </nav>
+
+    <aside class="mat-elevation-z2">
+        <app-trip-filter
+            #tripFilter
+            [tripsProvider]="trips"
+            (onFilterChanged)="calcPriceBounds()">
+        </app-trip-filter>
+    </aside>
+
+    <main>
+        <h1 class="tripsNotFound" *ngIf="tripFilter!.get().length == 0">Brak wyników</h1>
+
+        <mat-card
+            class="mat-elevation-z5"
+            *ngFor="let trip of tripFilter!.get()"
+            [style.background-color]="getAvailableAmount(trip) > 3 ? '' : '#212121'"
+            [ngClass]="trip.id === mostExpensiveId ? 'mostExpensiveTrip' : (trip.id === leastExpensiveId ? 'leastExpensiveTrip' : '')">
+
+            <button
+                mat-icon-button
+                class="removeTrip"
+                matTooltip="Usuń"
+                (click)="removeTrip(trip)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <picture>
+                <img [src]="trip.img" alt="big">
+            </picture>
+
+            <section>
+                <header>
+                    <h1>{{ trip.name | uppercase }}</h1>
+                    <p>{{ trip.country | uppercase }}</p>
+                    <p>{{ getDateStr(trip.startDate) }} - {{ getDateStr(trip.endDate) }}</p>
+                    <p>Cena: {{ trip.unitPrice }} EUR</p>
+                </header>
+                <p>{{ trip.desc }}</p>
+                <!--            <hr>-->
+            </section>
+
+            <footer>
+                <div class="booking-controls">
+                    <button
+                        matRipple
+                        [disabled]="getAvailableAmount(trip) == 0"
+                        [ngClass]="{'btnHidden': getAvailableAmount(trip) == 0}"
+                        class="cart mat-elevation-z1" (click)="addToCart(trip)"><span>+</span></button>
+                    <span>{{ getAvailableAmount(trip) }}</span>
+                    <button
+                        matRipple
+                        [disabled]="cart.getAmount(trip.id) == 0"
+                        class="cart mat-elevation-z1" (click)="removeFromCart(trip)"><span>-</span></button>
+                </div>
+
+                <app-rating-bar
+                    [matTooltip]="'Średnia ocena: ' + trip.getStarsRating() + ' (' + trip.ratingCount + ')'"
+                    [starsCount]="trip.getStarsRating()"
+                    (onRatedEvent)="rateTrip(trip, $event)"
+                    color="#fdd835"
+                    ratedColor="#e91e63">
+                </app-rating-bar>
+            </footer>
+        </mat-card>
+    </main>
+</div>

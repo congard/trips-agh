@@ -1,0 +1,198 @@
+#content {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: auto auto auto;
+  grid-template-areas: "header header" "sidebar main" ". main";
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  background: #e91e63;
+  width: 100%;
+  height: 56px;
+  color: white;
+  align-items: center;
+  z-index: 5;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+  grid-area: header;
+}
+
+#title {
+  font-weight: bolder;
+  text-transform: uppercase;
+}
+
+#status {
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+aside {
+  grid-area: sidebar;
+  background: #424242;
+  position: fixed;
+  top: 56px;
+  padding: 24px 32px;
+  width: 20%;
+  height: calc(100vh - 56px);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+main {
+  position: relative;
+  top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  box-sizing: border-box;
+  margin-left: 5%;
+  margin-right: 5%;
+  min-height: calc(100vh - 56px);
+  grid-area: main;
+}
+main > mat-card {
+  background: #424242;
+  border: 0 solid transparent;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 256px;
+  min-height: 450px;
+  margin: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s;
+  position: relative;
+}
+main > mat-card:hover {
+  transform: scale(1.05, 1.05);
+}
+main > mat-card > * {
+  flex-basis: 0;
+  color: #b3b3b3;
+}
+main > mat-card > picture {
+  margin: 0;
+  flex-grow: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+main > mat-card > picture > img {
+  object-fit: cover;
+  width: 144px;
+  height: 144px;
+  border-radius: 50%;
+}
+main > mat-card > section {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 4;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+main > mat-card > section > header {
+  margin-bottom: 12px;
+}
+main > mat-card > section > header > h1 {
+  margin-bottom: 0;
+  font-weight: bolder;
+}
+main > mat-card > section > header > p {
+  color: #e91e63;
+  font-size: smaller;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+main > mat-card > section > p {
+  margin: 0;
+  font-size: smaller;
+}
+main > mat-card > section > hr {
+  height: 2px;
+  width: 80%;
+  margin-top: auto;
+  border-width: 0;
+  background-color: #b3b3b3;
+  color: #b3b3b3;
+}
+main > mat-card > footer {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 16px;
+}
+
+.mostExpensiveTrip {
+  box-shadow: 0 0 6px #4caf50 !important;
+}
+
+.leastExpensiveTrip {
+  box-shadow: 0 0 6px #f44336 !important;
+}
+
+.removeTrip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: color 0.2s;
+  cursor: pointer;
+  scale: 0.65;
+}
+
+.booking-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.cart {
+  background: #e91e63;
+  color: white;
+  border: none;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  font-family: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.cart > * {
+  z-index: 1;
+}
+.cart:hover {
+  background: #ad1457;
+}
+.cart:disabled {
+  background: #e91e63;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnHidden {
+  opacity: 0 !important;
+  cursor: auto !important;
+}
+
+.tripsNotFound {
+  color: #90a4ae;
+  margin: auto;
+}
+
+/*# sourceMappingURL=trips.component.css.map */

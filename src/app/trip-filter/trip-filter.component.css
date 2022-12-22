@@ -1,0 +1,23 @@
+* {
+    color: #b3b3b3;
+}
+
+.sliderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.sliderContainer > label {
+    margin: 0 8px;
+}
+
+.priceSlider {
+    width: 100%;
+}
+
+.datePicker {
+    width: 100%;
+    box-sizing: border-box;
+}
