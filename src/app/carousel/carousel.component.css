@@ -1,0 +1,33 @@
+.carousel-content {
+  display: flex;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+}
+.carousel-content .carousel-prev,
+.carousel-content .carousel-next {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.carousel-content .carousel-prev:hover,
+.carousel-content .carousel-next:hover {
+  opacity: 0.5;
+}
+.carousel-content .carousel-prev {
+  left: 0;
+  background: linear-gradient(90deg, #303030, rgba(0, 0, 0, 0));
+}
+.carousel-content .carousel-next {
+  right: 0;
+  background: linear-gradient(-90deg, #303030, rgba(0, 0, 0, 0));
+}
+.carousel-content img {
+  width: 100%;
+  object-fit: cover;
+}
+
+/*# sourceMappingURL=carousel.component.css.map */

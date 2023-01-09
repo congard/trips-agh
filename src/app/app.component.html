@@ -1,0 +1,72 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="over">
+        <mat-selection-list [multiple]="false" id="sidenav-routes">
+            <mat-list-option
+                *ngFor="let route of routes"
+                [value]="route.name"
+                [selected]="isRouteCurrent(route)"
+                (click)="sidenav.toggle()"
+                routerLink="{{ route.url }}">
+
+                {{ route.name }}
+
+            </mat-list-option>
+        </mat-selection-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <nav class="mat-elevation-z5">
+            <button mat-icon-button (click)="sidenav.toggle()" style="display: inline-flex">
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <span id="title">Trips</span>
+
+            <div id="nav-routes">
+                <a *ngFor="let route of routes"
+                   mat-ripple
+                   routerLink="{{ route.url }}"
+                   class="navBtn"
+                   [ngClass]="{'selected': isRouteCurrent(route)}">{{ route.name }}</a>
+            </div>
+
+            <div id="spacer"></div>
+
+            <button
+                class="navIconBtn"
+                matTooltip="Przypomnienia"
+                mat-icon-button
+                (click)="showNotifications()">
+
+                <p *ngIf="notifications.count() > 0" class="number-buble">{{ notifications.count() }}</p>
+                <mat-icon>notifications</mat-icon>
+
+            </button>
+
+            <button
+                class="navIconBtn"
+                matTooltip="Koszyk"
+                mat-icon-button
+                (click)="showCart()">
+
+                <p class="number-buble">{{ cart.getTotalAmount() }}</p>
+                <mat-icon>shopping_cart</mat-icon>
+
+            </button>
+
+            <button
+                class="navIconBtn"
+                matTooltip="Konto"
+                mat-icon-button>
+
+                <mat-icon>account_circle</mat-icon>
+
+            </button>
+        </nav>
+
+        <div class="app-routes">
+            <router-outlet></router-outlet>
+        </div>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

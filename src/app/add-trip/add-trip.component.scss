@@ -1,0 +1,29 @@
+@import "../variables";
+
+main {
+    display: flex;
+    flex-direction: column;
+    color: $textColor;
+    padding: 32px 20%;
+
+    .price {
+        text-align: right;
+    }
+
+    input.price::-webkit-outer-spin-button,
+    input.price::-webkit-inner-spin-button,
+    input.amount::-webkit-outer-spin-button,
+    input.amount::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    input.price,
+    input.amount {
+        -moz-appearance: textfield;
+    }
+
+    #btn-add-trip {
+        justify-self: right;
+        align-self: flex-end;
+    }
+}

@@ -1,5 +1,5 @@
-import {CartDetails} from "../CartDetails";
-import {TripsProvider} from "../TripsProvider";
+import {CartDetails} from "../core/CartDetails";
+import {TripsProvider} from "../core/trip/TripsProvider";
 
 export class CartData {
     constructor(

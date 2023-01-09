@@ -1,0 +1,105 @@
+@use '@angular/material' as mat;
+@import "@angular/material/theming";
+@import "variables";
+
+mat-sidenav-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#sidenav-routes {
+    padding: 24px 0;
+
+    mat-list-option {
+        padding: 0 48px 0 32px;
+    }
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    background: mat.get-color-from-palette($my-primary);
+    width: 100%;
+    height: $navHeight;
+    color: $textColor0;
+    align-items: center;
+    z-index: 5;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    grid-area: header;
+
+    #title {
+        font-weight: bolder;
+        text-transform: uppercase;
+        margin-left: 8px;
+        margin-right: 16px;
+    }
+
+    #nav-routes {
+        display: flex;
+    }
+
+    .navBtn {
+        margin-left: 16px;
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 10px;
+        color: white;
+        transition: background-color 0.1s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .navBtn.selected {
+        background: #ffffff22;
+    }
+
+    .navBtn:hover {
+        background: #ffffff33;
+    }
+
+    #spacer {
+        margin-left: auto;
+    }
+
+    .navIconBtn {
+        display: flex;
+        position: relative;
+        margin-left: 8px;
+
+        .number-buble {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 2px;
+            right: 0;
+            width: 1.5em;
+            height: 1.5em;
+            padding: 0.1em;
+            font-size: 0.4em;
+            color: mat.get-color-from-palette($my-primary);
+            background-color: white;
+            border-radius: 50%;
+        }
+    }
+}
+
+.app-routes {
+    position: relative;
+    left: 0;
+    top: $navHeight;
+}
+
+@media only screen and (max-width: 768px) {
+    #nav-routes {
+        display: none;
+    }
+}

@@ -1,4 +1,4 @@
-export type id_t = number
+export type id_t = string
 export type amount_t = number
 
 export class CartDetails {

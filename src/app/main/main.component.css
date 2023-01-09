@@ -1,0 +1,64 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #b3b3b3;
+}
+
+#top {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 56px);
+}
+#top > * {
+  z-index: 1;
+  color: white;
+}
+#top > h1 {
+  font-weight: bold;
+  font-size: 4.75em;
+  margin-bottom: 48px;
+}
+#top > p {
+  font-weight: lighter;
+  font-size: 2.25em;
+}
+
+#logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#homepage-content {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 20%;
+}
+#homepage-content > h1 {
+  align-self: center;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  font-size: 2.5em;
+  font-weight: bolder;
+}
+
+#homepage-contact {
+  display: flex;
+  justify-content: space-between;
+}
+#homepage-contact a {
+  color: #b3b3b3;
+  margin-left: 6px;
+}
+
+/*# sourceMappingURL=main.component.css.map */

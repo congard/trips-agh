@@ -1,0 +1,37 @@
+@import "../variables";
+
+main {
+    display: flex;
+    flex-direction: column;
+    color: $textColor;
+    padding: 32px 20%;
+
+    #cart-is-empty {
+        align-self: center;
+        justify-self: center;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 24px;
+
+        .cart-item-right {
+            display: flex;
+            justify-content: right;
+            align-items: center;
+
+            .cart-item-total-price {
+                margin-right: 32px;
+            }
+        }
+    }
+
+    h2 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+}

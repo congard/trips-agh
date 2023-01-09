@@ -1,0 +1,45 @@
+@import "../variables";
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: $textColor;
+    padding: 32px 20%;
+
+    mat-card {
+        width: 100%;
+        margin-bottom: 16px;
+
+        app-carousel {
+            margin-bottom: 16px;
+        }
+
+        mat-card-content {
+            display: flex;
+            flex-direction: column;
+
+            app-rating-overview {
+                align-self: center;
+            }
+
+            .mat-card-content-form {
+                > * {
+                    width: 100%;
+                }
+            }
+
+            span {
+                word-break: break-word;
+            }
+        }
+    }
+}
+
+.trip-info-avatar {
+    > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

@@ -1,0 +1,19 @@
+<main>
+    <label *ngIf="cart.getTotalAmount() == 0" id="cart-is-empty">Koszyk jest pusty</label>
+
+    <div *ngFor="let item of items" mat-ripple class="cart-item">
+        <div>
+            <h2>{{ item.trip.country }}, {{ item.trip.name }}</h2>
+            <p>{{ item.amount }} x €{{ item.trip.unitPrice }}</p>
+        </div>
+        <div class="cart-item-right">
+            <p class="cart-item-total-price">€{{ item.amount * item.trip.unitPrice }}</p>
+            <button mat-button (click)="buy(item.trip.id)">Kup teraz</button>
+        </div>
+    </div>
+
+    <div *ngIf="cart.getTotalAmount() != 0" class="cart-item">
+        <span>Suma: €{{ totalPrice }}</span>
+        <button mat-button (click)="buyAll()">Kup wszystko</button>
+    </div>
+</main>

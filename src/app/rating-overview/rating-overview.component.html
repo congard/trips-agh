@@ -1,0 +1,17 @@
+<mat-card class="rating-overview">
+    <p class="rating-overview-title">Rating overview</p>
+    <div class="rating-overview-rating"><p>{{ rating.getStarsRating() }}</p>/{{ rating.ratingArray.length }}</div>
+
+    <app-rating-bar #ratingBar
+        class="rating-overview-rating-bar"
+        [starsMaxCount]="rating.ratingArray.length"
+        [starsCount]="rating.getStars()"
+        (onRatedEvent)="onRatedEvent.emit($event)">
+    </app-rating-bar>
+
+    <div *ngFor="let count of rating.ratingArray.slice().reverse(); let i = index">
+        <fa-icon [icon]="faStar"></fa-icon> {{ rating.ratingArray.length - i }}
+        &nbsp;&nbsp;&nbsp;
+        <fa-icon [icon]="faUser"></fa-icon> {{ count }}
+    </div>
+</mat-card>

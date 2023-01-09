@@ -1,25 +1,4 @@
 <div id="content">
-    <nav class="mat-elevation-z5">
-        <span id="title">Rezerwacja wycieczek</span>
-
-        <span
-            *ngIf="{totalAmount: cart.getTotalAmount()} as variable"
-            [style.color]="variable.totalAmount >= 10 ? '#aaffaa' : ''"
-            id="status">Zarezerwowałeś {{ variable.totalAmount }} wycieczek</span>
-
-        <button
-            mat-icon-button
-            (click)="addTrip()">
-            <mat-icon>add</mat-icon>
-        </button>
-
-        <button
-            mat-icon-button
-            (click)="showCart()">
-            <mat-icon>shopping_cart</mat-icon>
-        </button>
-    </nav>
-
     <aside class="mat-elevation-z2">
         <app-trip-filter
             #tripFilter
@@ -35,7 +14,7 @@
             class="mat-elevation-z5"
             *ngFor="let trip of tripFilter!.get()"
             [style.background-color]="getAvailableAmount(trip) > 3 ? '' : '#212121'"
-            [ngClass]="trip.id === mostExpensiveId ? 'mostExpensiveTrip' : (trip.id === leastExpensiveId ? 'leastExpensiveTrip' : '')">
+            [ngClass]="trip.id == mostExpensiveId ? 'mostExpensiveTrip' : (trip.id == leastExpensiveId ? 'leastExpensiveTrip' : '')">
 
             <button
                 mat-icon-button
@@ -45,7 +24,7 @@
                 <mat-icon>delete</mat-icon>
             </button>
 
-            <picture>
+            <picture (click)="showTripInfo(trip)">
                 <img [src]="trip.img" alt="big">
             </picture>
 
@@ -75,9 +54,9 @@
                 </div>
 
                 <app-rating-bar
-                    [matTooltip]="'Średnia ocena: ' + trip.getStarsRating() + ' (' + trip.ratingCount + ')'"
-                    [starsCount]="trip.getStarsRating()"
-                    (onRatedEvent)="rateTrip(trip, $event)"
+                    [matTooltip]="'Średnia ocena: ' + trip.rating.getStarsRating() + ' (' + trip.rating.getRatingsCount() + ')'"
+                    [starsCount]="trip.rating.getStarsRating()"
+                    [canBeRated]="false"
                     color="#fdd835"
                     ratedColor="#e91e63">
                 </app-rating-bar>

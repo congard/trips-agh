@@ -1,0 +1,37 @@
+.carousel-content {
+    display: flex;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+
+    $hoverColor: #303030;
+
+    .carousel-prev,
+    .carousel-next {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.25s;
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+
+    .carousel-prev {
+        left: 0;
+        background: linear-gradient(90deg, $hoverColor, #00000000);
+    }
+
+    .carousel-next {
+        right: 0;
+        background: linear-gradient(-90deg, $hoverColor, #00000000);
+    }
+
+    img {
+        width: 100%;
+        object-fit: cover;
+    }
+}

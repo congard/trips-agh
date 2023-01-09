@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Przypomnienia</h2>
+
+<mat-dialog-content class="mat-typography">
+
+    <mat-list>
+        <mat-list-item *ngFor="let notification of notifications.get()">
+            <span matListItemTitle>{{ notification.title }}</span>
+            <span matListItemLine>{{ notification.description }}</span>
+        </mat-list-item>
+    </mat-list>
+
+    <span *ngIf="notifications.count() == 0">Brak przypomnień</span>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined">Zamknij</button>
+</mat-dialog-actions>

@@ -1,49 +1,14 @@
 @use '@angular/material' as mat;
 @import "@angular/material/theming";
-
-$my-primary: mat.define-palette(mat.$pink-palette, 500);
-$my-accent: mat.define-palette(mat.$blue-gray-palette, 500);
-
-$textColor0: white;
-$textColor: #b3b3b3;
-
-$navHeight: 56px;
+@import "../variables";
 
 #content {
     display: grid;
     grid-template-columns: 20% 80%;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     grid-template-areas:
-    "header header"
     "sidebar main"
     ". main"
-}
-
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    background: mat.get-color-from-palette($my-primary);
-    width: 100%;
-    height: $navHeight;
-    color: $textColor0;
-    align-items: center;
-    z-index: 5;
-    padding-left: 16px;
-    padding-right: 16px;
-    box-sizing: border-box;
-    grid-area: header;
-}
-
-#title {
-    font-weight: bolder;
-    text-transform: uppercase;
-}
-
-#status {
-    margin-left: auto;
-    margin-right: 16px;
 }
 
 aside {
@@ -60,7 +25,6 @@ aside {
 
 main {
     position: relative;
-    top: $navHeight;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -102,6 +66,7 @@ main {
             justify-content: center;
             align-items: center;
             padding: 12px;
+            cursor: pointer;
 
             > img {
                 object-fit: cover;

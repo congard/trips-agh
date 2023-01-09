@@ -6,8 +6,8 @@ import {
     Output
 } from '@angular/core';
 import {ChipsMultiSelectComponent} from "../chips-multi-select/chips-multi-select.component";
-import {TripsProvider} from "../TripsProvider";
-import {Trip} from "../Trip";
+import {TripsProvider} from "../core/trip/TripsProvider";
+import {Trip} from "../core/trip/Trip";
 
 @Component({
     selector: 'app-trip-filter',
@@ -32,11 +32,13 @@ export class TripFilterComponent implements OnInit {
     private countries = new Set<string>();
     private ratings = new Set<number>();
 
+    private trips: Trip[] = []
+
     private countryFilter = (trip: Trip) =>
         this.countries.size == 0 || this.countries.has(trip.country)
 
     private ratingFilter = (trip: Trip) =>
-        this.ratings.size == 0 || this.ratings.has(trip.getStars())
+        this.ratings.size == 0 || this.ratings.has(trip.rating.getStars())
 
     private dateFilter = (trip: Trip) =>
         this.dateStart <= trip.startDate && this.dateEnd >= trip.endDate
@@ -51,6 +53,7 @@ export class TripFilterComponent implements OnInit {
     public update() {
         this.updateDateFilter()
         this.updatePriceFilter()
+        this.trips = this.filterBy(this.countryFilter, this.ratingFilter, this.dateFilter, this.priceFilter)
     }
 
     private filterBy(...filters: ((trip: Trip) => boolean)[]) {
@@ -60,7 +63,7 @@ export class TripFilterComponent implements OnInit {
     }
 
     public get() {
-        return this.filterBy(this.countryFilter, this.ratingFilter, this.dateFilter, this.priceFilter)
+        return this.trips
     }
 
     onCountrySelected(countriesComponent: ChipsMultiSelectComponent) {
@@ -87,7 +90,7 @@ export class TripFilterComponent implements OnInit {
 
     collectRatings() {
         const ratings = new Set<number>()
-        this.tripsProvider.forEach(trip => ratings.add(trip.getStars()))
+        this.tripsProvider.forEach(trip => ratings.add(trip.rating.getStars()))
         return Array.from(ratings.values()).sort()
     }
 

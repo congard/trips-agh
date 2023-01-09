@@ -1,0 +1,104 @@
+<main *ngIf="(trip | async) as trip">
+    <mat-card>
+        <mat-card-header>
+            <div mat-card-avatar class="trip-info-avatar">
+                <img mat-card-image [src]="trip.img" alt="{{ trip.name }}, {{ trip.country }}">
+            </div>
+
+            <mat-card-title>{{ trip.name }}</mat-card-title>
+            <mat-card-subtitle>{{ trip.country }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <app-carousel [urls]="trip.images"></app-carousel>
+
+        <mat-card-content>
+            <p>Opis: {{ trip.desc }}</p>
+            <p>Cena: {{ trip.unitPrice }}</p>
+
+            <app-rating-overview
+                [rating]="trip.rating"
+                (onRatedEvent)="rateTrip(trip, $event)">
+            </app-rating-overview>
+
+            <div>
+
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-button
+                (click)="goToTrips()"
+                matTooltip="Powrót do listy wycieczek">
+                Powrót
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-content>
+
+            <form class="mat-card-content-form" #inputForm="ngForm">
+                <mat-form-field>
+                    <mat-label>Nick</mat-label>
+                    <input
+                        matInput
+                        placeholder="Twój nick"
+                        required
+                        name="inputNick"
+                        [(ngModel)]="inputNick">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Data zakupu</mat-label>
+                    <input
+                        matInput
+                        name="purchaseDate"
+                        [matDatepicker]="datePicker"
+                        [(ngModel)]="inputDate">
+                    <mat-hint>DD.MM.YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #datePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Zostaw komentarz</mat-label>
+                    <textarea
+                        matInput
+                        placeholder="Np. Bardzo fajna wycieczka! Polecam!"
+                        required
+                        name="inputComment"
+                        [(ngModel)]="inputComment"></textarea>
+                </mat-form-field>
+            </form>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-button
+                (click)="sendComment(trip)"
+                matTooltip="Wyślij komentarz">
+                Wyślij
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card *ngFor="let comment of trip.comments.slice().reverse()">
+        <mat-card-header>
+            <div mat-card-avatar class="trip-info-avatar">
+                <img mat-card-image src="assets/user.png" alt="User account">
+            </div>
+
+            <mat-card-title>{{ comment.nick }}</mat-card-title>
+            <mat-card-subtitle>
+                {{ formatDate(comment.date, "dd.MM.yyyy HH:mm") }}
+                <span *ngIf="comment.purchaseDate > 0">
+                    {{ "- data zakupu: " + formatDate(comment.purchaseDate, "dd.MM.yyyy") }}
+                </span>
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <span>{{ comment.comment }}</span>
+        </mat-card-content>
+    </mat-card>
+</main>

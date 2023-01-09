@@ -1,4 +1,5 @@
-import {ValidationResult} from "../ValidationResult";
+import {ValidationResult} from "../core/ValidationResult";
+import {TripImage} from "../core/trip/Trip";
 
 export class TripData {
     public name?: string
@@ -9,6 +10,7 @@ export class TripData {
     public amount?: number
     public desc?: string
     public img?: string = "assets/images/trip_default.png"
+    public images: TripImage[] = ["assets/images/trip_default.png"]
 
     private fieldCannotBeEmpty = "Pole nie może być puste"
 
@@ -54,6 +56,10 @@ export class TripData {
         return new ValidationResult(this.img != undefined, this.fieldCannotBeEmpty)
     }
 
+    public isImagesValid() {
+        return new ValidationResult(this.images.length > 0, this.fieldCannotBeEmpty)
+    }
+
     public isValid() {
         return this.isNameValid().isValid &&
             this.isCountryValid().isValid &&
@@ -62,6 +68,7 @@ export class TripData {
             this.isUnitPriceValid().isValid &&
             this.isAmountValid().isValid &&
             this.isDescValid().isValid &&
-            this.isImgValid().isValid
+            this.isImgValid().isValid &&
+            this.isImagesValid()
     }
 }

@@ -9,8 +9,9 @@
         "amount": 5,
         "desc": "Kraków - Czechy - Wiedeń - Melk - Wiedeń - Słowacja - Kraków",
         "img": "assets/images/austria.png",
-        "rating": 20,
-        "ratingCount": 4
+        "images": ["assets/images/austria.png", "assets/images/berlin.png"],
+        "rating": [0, 0, 0, 0, 4],
+        "comments": []
     },
     {
         "id": 1,
@@ -22,8 +23,9 @@
         "amount": 8,
         "desc": "Kraków - Wrocław - Zielona Góra - Berlin",
         "img": "assets/images/berlin.png",
-        "rating": 0,
-        "ratingCount": 0
+        "images": ["assets/images/berlin.png"],
+        "rating": [0, 0, 0, 0, 0],
+        "comments": []
     },
     {
         "id": 2,
@@ -35,8 +37,9 @@
         "amount": 15,
         "desc": "Kraków - Budapest - Székesfehérvár - Balaton-felvidéki Nemzeti Park",
         "img": "assets/images/hu_park.png",
-        "rating": 45,
-        "ratingCount": 10
+        "images": ["assets/images/hu_park.png"],
+        "rating": [1, 0, 0, 1, 8],
+        "comments": []
     },
     {
         "id": 3,
@@ -48,8 +51,9 @@
         "amount": 8,
         "desc": "Kraków - Bielsko-Biała - Ostrawa - Brno - Praga",
         "img": "assets/images/praga.png",
-        "rating": 12,
-        "ratingCount": 3
+        "images": ["assets/images/praga.png"],
+        "rating": [0, 0, 0, 3, 0],
+        "comments": []
     },
     {
         "id": 4,
@@ -61,8 +65,16 @@
         "amount": 2,
         "desc": "Kraków - Rzeszów - Lwów - Winnica - Biała Cerkiew - Kijów",
         "img": "assets/images/kyiv.png",
-        "rating": 35,
-        "ratingCount": 7
+        "images": ["assets/images/kyiv.png"],
+        "rating": [0, 0, 0, 2, 5],
+        "comments": [
+            {
+                "nick": "Lorem ipsum",
+                "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla at risus eros.",
+                "date": 1672959091065,
+                "purchaseDate": 1670959091065
+            }
+        ]
     },
     {
         "id": 5,
@@ -74,8 +86,9 @@
         "amount": 10,
         "desc": "Kraków - Warszawa - Suwałki - Kaunas - Klaipėda",
         "img": "assets/images/klaipeda.png",
-        "rating": 20,
-        "ratingCount": 5
+        "images": ["assets/images/klaipeda.png"],
+        "rating": [0, 0, 0, 5, 0],
+        "comments": []
     },
     {
         "id": 6,
@@ -87,8 +100,9 @@
         "amount": 15,
         "desc": "Kraków - Warszawa - Suwałki - Kaunas - Šiauliai - Jelgava - Riga",
         "img": "assets/images/riga.png",
-        "rating": 15,
-        "ratingCount": 5
+        "images": ["assets/images/riga.png"],
+        "rating": [0, 0, 5, 0, 0],
+        "comments": []
     },
     {
         "id": 7,
@@ -100,7 +114,8 @@
         "amount": 20,
         "desc": "Kraków - Warszawa - Suwałki - Kaunas - Šiauliai - Jelgava - Riga - Pärnu - Tallinn",
         "img": "assets/images/tallinn.png",
-        "rating": 16,
-        "ratingCount": 4
+        "images": ["assets/images/tallinn.png"],
+        "rating": [0, 0, 0, 4, 0],
+        "comments": []
     }
 ]

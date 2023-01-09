@@ -1,0 +1,25 @@
+main {
+  display: flex;
+  flex-direction: column;
+  color: #b3b3b3;
+  padding: 32px 20%;
+}
+main .price {
+  text-align: right;
+}
+main input.price::-webkit-outer-spin-button,
+main input.price::-webkit-inner-spin-button,
+main input.amount::-webkit-outer-spin-button,
+main input.amount::-webkit-inner-spin-button {
+  display: none;
+}
+main input.price,
+main input.amount {
+  -moz-appearance: textfield;
+}
+main #btn-add-trip {
+  justify-self: right;
+  align-self: flex-end;
+}
+
+/*# sourceMappingURL=add-trip.component.css.map */

@@ -1,0 +1,31 @@
+main {
+  display: flex;
+  flex-direction: column;
+  color: #b3b3b3;
+  padding: 32px 20%;
+}
+main #cart-is-empty {
+  align-self: center;
+  justify-self: center;
+}
+main .cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+}
+main .cart-item .cart-item-right {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+main .cart-item .cart-item-right .cart-item-total-price {
+  margin-right: 32px;
+}
+main h2 {
+  margin: 0;
+}
+main p {
+  margin: 0;
+}
+
+/*# sourceMappingURL=cart.component.css.map */

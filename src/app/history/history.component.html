@@ -1,0 +1,24 @@
+<main>
+    <table matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+        <tr>
+            <th mat-sort-header="name">Nazwa</th>
+            <th mat-sort-header="country">Kraj</th>
+            <th mat-sort-header="status">Status</th>
+            <th mat-sort-header="startDate">Data rozpoczęcia</th>
+            <th mat-sort-header="endDate">Data końca</th>
+            <th mat-sort-header="unitPrice">Cena jednostkowa</th>
+            <th mat-sort-header="tickets">Liczba biletów</th>
+        </tr>
+
+        <tr *ngFor="let tripDetails of sortedData">
+            <td>{{ tripDetails.trip.name }}</td>
+            <td>{{ tripDetails.trip.country }}</td>
+            <td>{{ tripDetails.getTripStatus() }}</td>
+            <td>{{ tripDetails.trip.startDate.toDateString() }}</td>
+            <td>{{ tripDetails.trip.endDate.toDateString() }}</td>
+            <td>€{{ tripDetails.trip.unitPrice }}</td>
+            <td>{{ tripDetails.amount }}</td>
+        </tr>
+    </table>
+
+</main>

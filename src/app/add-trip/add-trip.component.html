@@ -1,6 +1,5 @@
-<h2 mat-dialog-title>Dodaj wycieczkę</h2>
-
-<mat-dialog-content class="mat-typography">
+<main class="mat-typography">
+    <h2>Dodaj wycieczkę</h2>
 
     <mat-form-field appearance="fill">
         <mat-label>Nazwa</mat-label>
@@ -98,9 +97,36 @@
         </mat-error>
     </mat-form-field>
 
-</mat-dialog-content>
+    <mat-form-field appearance="fill">
+        <mat-label>Images</mat-label>
 
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="undefined">Cofnij</button>
-    <button mat-button (click)="onAdd()" cdkFocusInitial>Dodaj</button>
-</mat-dialog-actions>
+        <mat-chip-grid #chipGrid
+            aria-label="Enter images" required
+            [formControl]="imagesControl">
+
+            <mat-chip-row *ngFor="let image of tripData.images"
+                          (removed)="removeImage(image)"
+                          [editable]="true"
+                          (edited)="editImage(image, $event)">
+                {{ image }}
+                <button matChipRemove [attr.aria-label]="'remove ' + image">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip-row>
+
+            <input placeholder="New image..."
+                   [matChipInputFor]="chipGrid"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="true"
+                   (matChipInputTokenEnd)="addImage($event)"/>
+        </mat-chip-grid>
+
+        <mat-error *ngIf="!tripData.isImagesValid().isValid">
+            {{ tripData.isImagesValid().message }}
+        </mat-error>
+
+    </mat-form-field>
+
+    <button id="btn-add-trip" mat-button (click)="onAdd()">Dodaj</button>
+
+</main>

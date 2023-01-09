@@ -1,35 +1,8 @@
 #content {
   display: grid;
   grid-template-columns: 20% 80%;
-  grid-template-rows: auto auto auto;
-  grid-template-areas: "header header" "sidebar main" ". main";
-}
-
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  background: #e91e63;
-  width: 100%;
-  height: 56px;
-  color: white;
-  align-items: center;
-  z-index: 5;
-  padding-left: 16px;
-  padding-right: 16px;
-  box-sizing: border-box;
-  grid-area: header;
-}
-
-#title {
-  font-weight: bolder;
-  text-transform: uppercase;
-}
-
-#status {
-  margin-left: auto;
-  margin-right: 16px;
+  grid-template-rows: auto auto;
+  grid-template-areas: "sidebar main" ". main";
 }
 
 aside {
@@ -46,7 +19,6 @@ aside {
 
 main {
   position: relative;
-  top: 56px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -86,6 +58,7 @@ main > mat-card > picture {
   justify-content: center;
   align-items: center;
   padding: 12px;
+  cursor: pointer;
 }
 main > mat-card > picture > img {
   object-fit: cover;
