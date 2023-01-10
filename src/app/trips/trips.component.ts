@@ -40,6 +40,7 @@ export class TripsComponent implements OnInit, AfterViewInit {
 
         this.trips.onDataUpdateListeners.push(() => {
             this.tripFilter!.update()
+            this.calcPriceBounds()
         })
     }
 
