@@ -50,10 +50,14 @@ export class TripFilterComponent implements OnInit {
         this.update()
     }
 
+    private filterAll() {
+        this.trips = this.filterBy(this.countryFilter, this.ratingFilter, this.dateFilter, this.priceFilter)
+    }
+
     public update() {
         this.updateDateFilter()
         this.updatePriceFilter()
-        this.trips = this.filterBy(this.countryFilter, this.ratingFilter, this.dateFilter, this.priceFilter)
+        this.filterAll()
     }
 
     private filterBy(...filters: ((trip: Trip) => boolean)[]) {
@@ -179,6 +183,7 @@ export class TripFilterComponent implements OnInit {
     }
 
     private onPriceRangeChanged() {
+        this.filterAll()
         this.onFilterChanged.emit(this)
     }
 
