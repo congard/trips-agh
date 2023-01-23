@@ -1,7 +1,8 @@
 import {ValidationResult} from "../core/ValidationResult";
-import {TripImage} from "../core/trip/Trip";
+import {Trip, TripImage} from "../core/trip/Trip";
 
 export class TripData {
+    public id?: string
     public name?: string
     public country?: string
     public startDate?: Date
@@ -9,8 +10,8 @@ export class TripData {
     public unitPrice?: number
     public amount?: number
     public desc?: string
-    public img?: string = "assets/images/trip_default.png"
-    public images: TripImage[] = ["assets/images/trip_default.png"]
+    public img?: string
+    public images: TripImage[] = []
 
     private fieldCannotBeEmpty = "Pole nie może być puste"
 
@@ -70,5 +71,34 @@ export class TripData {
             this.isDescValid().isValid &&
             this.isImgValid().isValid &&
             this.isImagesValid()
+    }
+
+    public fromTrip(trip: Trip): TripData {
+        this.id = trip.id
+        this.name = trip.name
+        this.country = trip.country
+        this.startDate = trip.startDate
+        this.endDate = trip.endDate
+        this.unitPrice = trip.unitPrice
+        this.amount = trip.amount
+        this.desc = trip.desc
+        this.img = trip.img
+        this.images = trip.images
+        return this;
+    }
+
+    public toTrip(): Trip {
+        return new Trip(
+            this.id == undefined ? "" : this.id,
+            this.name!,
+            this.country!,
+            this.startDate!,
+            this.endDate!,
+            this.unitPrice!,
+            this.amount!,
+            this.desc!,
+            this.img!,
+            this.images!
+        )
     }
 }

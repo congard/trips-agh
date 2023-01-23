@@ -18,6 +18,19 @@ mat-sidenav-container {
     }
 }
 
+#sidenav-manage-routes-panel {
+
+}
+
+.mat-list-container {
+    display: flex;
+    align-items: center;
+
+    > p {
+        margin: 0 0 0 8px;
+    }
+}
+
 nav {
     position: fixed;
     top: 0;
@@ -69,6 +82,15 @@ nav {
         margin-left: auto;
     }
 
+    #btn-signIn {
+        border-width: 3px;
+        margin-left: 24px
+    }
+
+    #btn-signUp {
+        background-color: mat.get-color-from-palette($my-primary, 700);
+    }
+
     .navIconBtn {
         display: flex;
         position: relative;
@@ -98,8 +120,10 @@ nav {
     top: $navHeight;
 }
 
-@media only screen and (max-width: 768px) {
-    #nav-routes {
-        display: none;
+@media only screen and (max-width: 1024px) {
+    nav {
+        #nav-routes {
+            display: none;
+        }
     }
 }

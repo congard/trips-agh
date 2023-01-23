@@ -1,28 +1,32 @@
-main {
+.content-main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   color: #b3b3b3;
   padding: 32px 20%;
 }
-main table {
+.content-main table {
   border-collapse: collapse;
   table-layout: fixed;
   overflow-x: auto;
   display: block;
 }
-main tr {
+.content-main table tr {
   border-bottom: 1px solid #595959;
 }
-main tr:nth-last-child(1) {
+.content-main table tr:nth-last-child(1) {
   border: none;
 }
-main tr > th,
-main tr > td {
+.content-main table tr > th,
+.content-main table tr > td {
   padding: 12px 16px;
   background-color: #424242;
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
+}
+
+.content-main {
+  flex-direction: row;
 }
 
 /*# sourceMappingURL=history.component.css.map */

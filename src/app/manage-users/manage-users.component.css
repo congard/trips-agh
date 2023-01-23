@@ -1,0 +1,45 @@
+.content-main {
+  display: flex;
+  flex-direction: column;
+  color: #b3b3b3;
+  padding: 32px 20%;
+}
+.content-main table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  overflow-x: auto;
+  display: block;
+}
+.content-main table tr {
+  border-bottom: 1px solid #595959;
+}
+.content-main table tr:nth-last-child(1) {
+  border: none;
+}
+.content-main table tr > th,
+.content-main table tr > td {
+  padding: 12px 16px;
+  background-color: #424242;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.content-main {
+  flex-direction: row;
+  justify-content: center;
+}
+.content-main .role-cell {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.content-main .role-cell p {
+  margin: 0 0 0 8px;
+}
+.content-main .role-cell mat-icon {
+  scale: 0.65;
+}
+
+/*# sourceMappingURL=manage-users.component.css.map */

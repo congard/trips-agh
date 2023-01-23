@@ -1,4 +1,4 @@
-<main>
+<main class="content-main">
     <table matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
         <tr>
             <th mat-sort-header="name">Nazwa</th>
@@ -13,12 +13,11 @@
         <tr *ngFor="let tripDetails of sortedData">
             <td>{{ tripDetails.trip.name }}</td>
             <td>{{ tripDetails.trip.country }}</td>
-            <td>{{ tripDetails.getTripStatus() }}</td>
+            <td>{{ tripDetails.trip.getStatus() }}</td>
             <td>{{ tripDetails.trip.startDate.toDateString() }}</td>
             <td>{{ tripDetails.trip.endDate.toDateString() }}</td>
             <td>€{{ tripDetails.trip.unitPrice }}</td>
-            <td>{{ tripDetails.amount }}</td>
+            <td>{{ tripDetails.details.amount }}</td>
         </tr>
     </table>
-
 </main>

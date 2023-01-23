@@ -1,21 +1,21 @@
-import {Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, LOCALE_ID, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Trip} from "../core/trip/Trip";
-import {State} from "../core/State";
 import {RatingBarComponent} from "../rating-bar/rating-bar.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {formatDate} from "@angular/common";
 import {Comment} from "../core/trip/Comment";
-import {MatInput} from "@angular/material/input";
-import {MatFormField} from "@angular/material/form-field";
-import {Form, NgForm} from "@angular/forms";
+import {NgForm} from "@angular/forms";
+import {TripsProvider} from "../core/trip/TripsProvider";
+import {User} from "../core/user/User";
+import {firstValueFrom} from "rxjs";
+import {Notifier} from "../core/Notifier";
 
 @Component({
     selector: 'app-trip-info',
     templateUrl: './trip-info.component.html',
     styleUrls: ['./trip-info.component.scss']
 })
-export class TripInfoComponent implements OnInit {
+export class TripInfoComponent implements AfterViewInit {
     @ViewChild("inputForm") inputNickEl!: NgForm
     @ViewChild("inputPurchaseDateEl") inputPurchaseDateEl!: HTMLInputElement
     @ViewChild("inputCommentEl") inputCommentEl!: HTMLInputElement
@@ -24,23 +24,37 @@ export class TripInfoComponent implements OnInit {
     inputDate?: Date
     inputComment?: string
 
-    _trip?: Promise<Trip | null>
+    trip: Trip | null = null
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private snackBar: MatSnackBar,
-        private state: State,
+        private notifier: Notifier,
+        private tripsProvider: TripsProvider,
+        private user: User,
         @Inject(LOCALE_ID) private locale: string
     ) {}
 
-    ngOnInit() {
-        const id = this.route.snapshot.paramMap.get("id")
-        this._trip = this.state.tripsProvider.getById(id!)
-    }
+    isRated: Promise<boolean> = new Promise<boolean>(resolve => resolve(false))
 
-    get trip() {
-        return this._trip
+    ngAfterViewInit() {
+        const id = this.route.snapshot.paramMap.get("id")
+
+        this.tripsProvider.getById(id!).then(trip => {
+            this.trip = trip
+
+            this.isRated = new Promise<boolean>(async resolve => {
+                const _isRated = () =>
+                    resolve(this.trip != null && this.user.isTripRated(this.trip.id))
+
+                if (this.user.isLoaded) {
+                    _isRated()
+                } else {
+                    await firstValueFrom(this.user.onChange)
+                    _isRated()
+                }
+            })
+        })
     }
 
     goToTrips() {
@@ -48,10 +62,9 @@ export class TripInfoComponent implements OnInit {
     }
 
     rateTrip(trip: Trip, ratingBar: RatingBarComponent) {
-        // TODO: check if has already been rated
-        const trips = this.state.tripsProvider
-        trips.rate(trip, ratingBar.getStars())
-        this.snackBar.open("Dziękujemy za ocenę!", "OK", {duration: 1500})
+        this.user.rateTrip(trip.id, ratingBar.getStars()).then(() => {
+            this.notifier.showMessage("Dziękujemy za ocenę!")
+        }).catch(reason => this.notifier.showError(reason))
     }
 
     sendComment(trip: Trip) {
@@ -73,18 +86,20 @@ export class TripInfoComponent implements OnInit {
             "Nie mogłeś uczestniczyć w wycieczce która jeszcze się nie odbyła. Wprowadź poprawną datę")
 
         if (errors.length == 0) {
-            this.state.tripsProvider.comment(trip, new Comment(
+            this.tripsProvider.comment(trip, new Comment(
                 this.inputNick!, this.inputComment!,
                 this.inputDate == undefined ? -1 : this.inputDate.getTime()
-            ))
+            )).then(() => {
+                this.inputNick = undefined
+                this.inputComment = undefined
+                this.inputDate = undefined
 
-            this.inputNick = undefined
-            this.inputComment = undefined
-            this.inputDate = undefined
+                this.inputNickEl.reset()
 
-            this.inputNickEl.reset()
+                this.notifier.showMessage("Komentarz został dodany")
+            }).catch(reason => this.notifier.showError(reason))
         } else {
-            this.snackBar.open("Błąd! " + errors.join(", "), "OK", {duration: 5000})
+            this.notifier.showError(errors.join(", "))
         }
     }
 

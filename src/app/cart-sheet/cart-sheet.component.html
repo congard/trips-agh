@@ -1,7 +1,7 @@
 <mat-nav-list>
-    <label *ngIf="data.cart.getTotalAmount() == 0">Koszyk jest pusty</label>
+    <label *ngIf="cart.getTotalAmount() == 0">Koszyk jest pusty</label>
 
-    <div *ngFor="let item of data.cart.get() | keyvalue">
+    <div *ngFor="let item of cart.get() | keyvalue">
         <a *ngIf="(getById(item.key) | async) as trip" mat-list-item>
             <span matListItemTitle>{{ trip.country }}, {{ trip.name }}</span>
             <div class="item-details" matLine>
@@ -11,7 +11,7 @@
         </a>
     </div>
 
-    <div *ngIf="data.cart.getTotalAmount() != 0" class="cart-sheet-footer">
+    <div *ngIf="cart.getTotalAmount() != 0" class="cart-sheet-footer">
         <span>Suma: €{{ getTotalPrice() | async }}</span>
         <button mat-button (click)="showCart()">Dalej</button>
     </div>

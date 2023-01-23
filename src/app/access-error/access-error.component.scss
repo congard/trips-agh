@@ -1,0 +1,14 @@
+@import "../variables";
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $textColor;
+    height: calc(100vh - $navHeight);
+
+    h1 {
+        font-weight: bold;
+    }
+}

@@ -13,6 +13,14 @@ mat-sidenav-container {
   padding: 0 48px 0 32px;
 }
 
+.mat-list-container {
+  display: flex;
+  align-items: center;
+}
+.mat-list-container > p {
+  margin: 0 0 0 8px;
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -58,6 +66,13 @@ nav .navBtn:hover {
 nav #spacer {
   margin-left: auto;
 }
+nav #btn-signIn {
+  border-width: 3px;
+  margin-left: 24px;
+}
+nav #btn-signUp {
+  background-color: #c2185b;
+}
 nav .navIconBtn {
   display: flex;
   position: relative;
@@ -85,8 +100,8 @@ nav .navIconBtn .number-buble {
   top: 56px;
 }
 
-@media only screen and (max-width: 768px) {
-  #nav-routes {
+@media only screen and (max-width: 1024px) {
+  nav #nav-routes {
     display: none;
   }
 }

@@ -1,0 +1,49 @@
+<main class="content-main">
+    <mat-card *ngFor="let trip of tripsProvider.trips">
+        <mat-card-content>
+            <div id="mat-card-content-left">
+                <div id="trip-info">
+                    <p matTooltip="Nazwa wycieczki">{{ trip.name }}</p>
+                    <p matTooltip="Kraj">{{ trip.country }}</p>
+                    <p matTooltip="Cena jednostkowa">€{{ trip.unitPrice }}</p>
+                    <p matTooltip="Liczba dostępnych biletów">{{ trip.amount }}</p>
+                    <p matTooltip="Data rozpoczęcia – Data końca">{{ getDate(trip.startDate) }} - {{ getDate(trip.endDate) }}</p>
+                </div>
+            </div>
+
+            <div id="mat-card-content-right">
+                <button mat-icon-button
+                        matTooltip="Otwórz stronę wycieczki"
+                        routerLink="/trips/{{ trip.id }}">
+                    <mat-icon>open_in_new</mat-icon>
+                </button>
+
+                <button mat-icon-button matTooltip="Zarządzaj" [matMenuTriggerFor]="manageTripMenu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #manageTripMenu="matMenu">
+                    <button mat-menu-item (click)="openTripPage(trip)">
+                        <mat-icon>open_in_new</mat-icon>
+                        <span>Otwórz w nowej karcie</span>
+                    </button>
+                    <button mat-menu-item (click)="editTrip(trip)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edytuj wycieczkę</span>
+                    </button>
+                    <button mat-menu-item (click)="removeTrip(trip)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Usuń wycieczkę</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <button mat-icon-button
+            id="btn-add-new-trip"
+            matTooltip="Dodaj wycieczkę"
+            (click)="addTrip()">
+        <mat-icon>add</mat-icon>
+    </button>
+</main>

@@ -1,0 +1,27 @@
+<main>
+    <h1>{{ title }}</h1>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="emailFormControl" required #inEmail>
+        <mat-error *ngIf="emailFormControl.invalid">{{ getEmailErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Hasło</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" required #inPassword>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="passwordFormControl.invalid">{{ getPasswordErrorMessage() }}</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox #inIsRemember
+        color="primary"
+        id="checkbox-remember-me"
+        checked="true">Zapamiętaj</mat-checkbox>
+
+    <div id="login-controls">
+        <button mat-button (click)="onAction(inEmail.value, inPassword.value, inIsRemember.checked)">{{ title }}</button>
+    </div>
+</main>

@@ -1,0 +1,57 @@
+.content-main {
+  display: flex;
+  flex-direction: column;
+  color: #b3b3b3;
+  padding: 32px 20%;
+}
+.content-main table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  overflow-x: auto;
+  display: block;
+}
+.content-main table tr {
+  border-bottom: 1px solid #595959;
+}
+.content-main table tr:nth-last-child(1) {
+  border: none;
+}
+.content-main table tr > th,
+.content-main table tr > td {
+  padding: 12px 16px;
+  background-color: #424242;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+.content-main > mat-card {
+  margin-bottom: 16px;
+}
+.content-main > mat-card > mat-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.content-main > mat-card > mat-card-content > #mat-card-content-left {
+  width: 70%;
+  overflow: scroll;
+}
+.content-main > mat-card > mat-card-content > #mat-card-content-left > #trip-info {
+  display: grid;
+  grid-template-columns: 30% 20% 10% 10% 30%;
+  align-items: center;
+  width: 100%;
+  min-width: 512px;
+}
+.content-main > mat-card > mat-card-content > #mat-card-content-left > #trip-info > p {
+  margin: 0;
+}
+.content-main > mat-card > mat-card-content > #mat-card-content-right {
+  display: flex;
+}
+.content-main > #btn-add-new-trip {
+  align-self: center;
+}
+
+/*# sourceMappingURL=manage-trips.component.css.map */

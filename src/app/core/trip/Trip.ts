@@ -1,4 +1,3 @@
-import {FixedLengthArray} from "../FixedLengthArray";
 import {Rating} from "./Rating";
 import {Comment} from "./Comment";
 
@@ -17,6 +16,24 @@ export class Trip {
         public rating: Rating = new Rating(),
         public comments: Comment[] = []
     ) {}
+
+    public getStatus() {
+        const date = new Date()
+
+        if (this.startDate <= date && date <= this.endDate) {
+            return TripStatus.Present
+        } else if (this.endDate < date) {
+            return TripStatus.Past
+        } else {
+            return TripStatus.Future
+        }
+    }
 }
 
 export type TripImage = string
+
+export enum TripStatus {
+    Past = "archiwalna",
+    Present = "aktywna",
+    Future = "nadchodząca"
+}

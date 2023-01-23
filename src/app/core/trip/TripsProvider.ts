@@ -3,11 +3,16 @@ import {Rating} from "./Rating";
 import {Comment} from "./Comment";
 import {AngularFireDatabase, AngularFireList} from "@angular/fire/compat/database";
 import {firstValueFrom, Observable, Subscription} from "rxjs";
+import {Injectable} from "@angular/core";
+import {TripData as TData} from "../../edit-trip-dialog/TripData";
 
 type OnDataUpdateListener = () => void
 
+@Injectable({
+    providedIn: 'root'
+})
 export class TripsProvider {
-    private trips: Trip[] = []
+    private _trips: Trip[] = []
 
     private tripsList: AngularFireList<TripData>
     private readonly tripsRef: Observable<TripData[]>
@@ -23,7 +28,7 @@ export class TripsProvider {
         this.tripsRef = this.tripsList.valueChanges()
     }
 
-    public get() {
+    public get trips() {
         // fetch data only if we need it all
         if (this.subscription == undefined) {
             this.subscription = this.tripsRef.subscribe(tripData => {
@@ -33,19 +38,54 @@ export class TripsProvider {
             })
         }
 
+        return this._trips
+    }
+
+    public set trips(trips: Trip[]) {
+        this._trips = trips
+    }
+
+    public get() {
         return this.trips.filter(trip => trip.amount > 0)
     }
 
-    public add(trip: Trip) {
-        const data = trip2tripData(trip)
+    public add(trip: Trip): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            const data = trip2tripData(trip)
 
-        this.tripsList.push(data).then(value => {
-            this.tripsList.update(value.key!, {id: value.key!} as any)
+            this.tripsList.push(data).then(value => {
+                this.tripsList.update(value.key!, {id: value.key!} as any)
+                    .then(() => resolve())
+                    .catch(reason => reject(reason))
+            }).catch(reason => reject(reason))
         })
     }
 
     public remove(trip: Trip) {
-        this.tripsList.remove(trip.id)
+        return this.tripsList.remove(trip.id)
+    }
+
+    public update(tData: TData) {
+        const data = {}
+
+        const writeData = (key: string, value: any) => {
+            if (value != undefined) {
+                // @ts-ignore
+                data[key] = value
+            }
+        }
+
+        writeData("name", tData.name)
+        writeData("country", tData.country)
+        writeData("startDate", tData.startDate?.getTime())
+        writeData("endDate", tData.endDate?.getTime())
+        writeData("unitPrice", tData.unitPrice)
+        writeData("amount", tData.amount)
+        writeData("desc", tData.desc)
+        writeData("img", tData.img)
+        writeData("images", tData.images.length == 0 ? undefined : tData.images)
+
+        return this.tripsList.update(tData.id!, data)
     }
 
     public getByIdCached(id: string): Trip | null {
@@ -77,20 +117,32 @@ export class TripsProvider {
         return this.get().forEach(callback)
     }
 
-    public rate(trip: Trip, starsCount: number) {
-        // TODO: checks
+    /**
+     * Do not use it in your code, use UserProvider#rateTrip instead
+     * @param trip
+     * @param starsCount
+     */
+    public _rate(trip: Trip, starsCount: number) {
         ++trip.rating.ratingArray[starsCount - 1]
-
-        this.tripsList.update(trip.id, {
+        return this.tripsList.update(trip.id, {
             rating: trip.rating.ratingArray
         } as any)
     }
 
     public comment(trip: Trip, comment: Comment) {
+        // Very bad design. Ale nie mogę tego już zmienić,
+        // bo poprzednie zestawy przestaną działać
         trip.comments.push(comment)
 
-        this.tripsList.update(trip.id, {
-            comments: trip.comments
+        return new Promise<void>((resolve, reject) => {
+            this.tripsList.update(trip.id, {
+                comments: trip.comments
+            }).then(() => {
+                resolve()
+            }).catch(reason => {
+                trip.comments.splice(trip.comments.indexOf(comment), 1)
+                reject(reason)
+            })
         })
     }
 }

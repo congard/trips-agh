@@ -13,6 +13,7 @@ export class RatingOverviewComponent implements AfterViewInit {
     public ratingBar!: RatingBarComponent
 
     @Input() rating!: Rating
+    @Input() isRated: boolean = false
 
     @Output() onRatedEvent = new EventEmitter<RatingBarComponent>();
 

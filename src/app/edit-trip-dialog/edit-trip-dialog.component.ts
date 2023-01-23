@@ -1,25 +1,21 @@
-import {Component} from '@angular/core';
-import {TripData} from "./TripData";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {Component, Inject} from '@angular/core';
 import {ErrorStateMatcher} from "@angular/material/core";
-import {AbstractControl, FormControl, FormGroupDirective, NgForm, ValidationErrors, Validators} from "@angular/forms";
+import {FormControl, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Trip, TripImage} from "../core/trip/Trip";
-import {TripsProvider} from "../core/trip/TripsProvider";
-import {State} from "../core/State";
+import {TripImage} from "../core/trip/Trip";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipEditedEvent, MatChipInputEvent} from "@angular/material/chips";
-import {ValidationResult} from "../core/ValidationResult";
+import {TripData} from "./TripData";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-    selector: 'app-add-trip',
-    templateUrl: './add-trip.component.html',
-    styleUrls: ['./add-trip.component.scss']
+    selector: 'app-edit-trip-dialog',
+    templateUrl: './edit-trip-dialog.component.html',
+    styleUrls: ['./edit-trip-dialog.component.scss']
 })
-export class AddTripComponent {
+export class EditTripDialog {
     readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-    tripData = new TripData()
     notEmptyMatcher = new CustomErrorStateMatcher()
     unitPriceMatcher = new CustomErrorStateMatcher(() => !this.tripData.isUnitPriceValid().isValid)
     amountMatcher = new CustomErrorStateMatcher(() => !this.tripData.isAmountValid().isValid)
@@ -32,8 +28,10 @@ export class AddTripComponent {
     ])
 
     constructor(
-        private snackBar: MatSnackBar,
-        private state: State
+        @Inject(MAT_DIALOG_DATA)
+        public tripData: TripData,
+        private dialogRef: MatDialogRef<EditTripDialog>,
+        private snackBar: MatSnackBar
     ) {}
 
     onAdd() {
@@ -42,22 +40,7 @@ export class AddTripComponent {
             return
         }
 
-        const trips = this.state.tripsProvider
-
-        trips.add(new Trip(
-            "",
-            this.tripData.name!,
-            this.tripData.country!,
-            this.tripData.startDate!,
-            this.tripData.endDate!,
-            this.tripData.unitPrice!,
-            this.tripData.amount!,
-            this.tripData.desc!,
-            this.tripData.img!,
-            this.tripData.images
-        ))
-
-        this.snackBar.open("Wycieczka została dodana", "OK", {duration: 1500})
+        this.dialogRef.close(this.tripData)
     }
 
     addImage(event: MatChipInputEvent): void {

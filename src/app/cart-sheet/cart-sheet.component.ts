@@ -1,9 +1,9 @@
-import {Component, Inject} from '@angular/core';
-import {CartData} from "./CartData";
-import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom-sheet";
+import {Component} from '@angular/core';
+import {MatBottomSheetRef} from "@angular/material/bottom-sheet";
 import {Router} from "@angular/router";
-import {Trip} from "../core/trip/Trip";
 import {memoize} from "@angular/cli/src/utilities/memoize";
+import {Cart} from "../core/Cart";
+import {TripsProvider} from "../core/trip/TripsProvider";
 
 @Component({
     selector: 'app-cart-sheet',
@@ -12,23 +12,23 @@ import {memoize} from "@angular/cli/src/utilities/memoize";
 })
 export class CartSheet {
     constructor(
-        @Inject(MAT_BOTTOM_SHEET_DATA)
-        public data: CartData,
         private sheetRef: MatBottomSheetRef,
-        private router: Router
+        private router: Router,
+        public cart: Cart,
+        private tripsProvider: TripsProvider
     ) {}
 
     @memoize
     getById(id: string) {
-        return this.data.trips.getById(id)
+        return this.tripsProvider.getById(id)
     }
 
     @memoize
     async getTotalPrice() {
         let price = 0
 
-        for (const [id, amount] of this.data.cart.get())
-            price += amount * (await this.data.trips.getById(id))!.unitPrice
+        for (const [id, amount] of this.cart.get())
+            price += amount * (await this.tripsProvider.getById(id))!.unitPrice
 
         return price
     }

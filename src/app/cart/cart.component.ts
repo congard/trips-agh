@@ -1,8 +1,9 @@
-import {AfterContentInit, ChangeDetectorRef, Component} from '@angular/core';
+import {AfterContentInit, Component} from '@angular/core';
 import {Trip} from "../core/trip/Trip";
-import {State} from "../core/State";
-import {CartDetails} from "../core/CartDetails";
+import {Cart} from "../core/Cart";
 import {TripsProvider} from "../core/trip/TripsProvider";
+import {User} from "../core/user/User";
+import {Notifier} from "../core/Notifier";
 
 @Component({
     selector: 'app-cart',
@@ -10,16 +11,12 @@ import {TripsProvider} from "../core/trip/TripsProvider";
     styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements AfterContentInit {
-    cart: CartDetails
-    trips: TripsProvider
-
     constructor(
-        private state: State,
-        private cdr: ChangeDetectorRef
-    ) {
-        this.cart = state.cart
-        this.trips = state.tripsProvider
-    }
+        public cart: Cart,
+        private tripsProvider: TripsProvider,
+        private user: User,
+        private notifier: Notifier
+    ) {}
 
     items: CartItemDetails[] = []
     totalPrice: number = 0
@@ -33,7 +30,7 @@ export class CartComponent implements AfterContentInit {
         const items: CartItemDetails[] = []
 
         for (const [id, amount] of this.cart.get())
-            items.push(new CartItemDetails((await this.trips.getById(id))!, amount));
+            items.push(new CartItemDetails((await this.tripsProvider.getById(id))!, amount));
 
         this.items = items
 
@@ -41,20 +38,21 @@ export class CartComponent implements AfterContentInit {
         let price = 0
 
         for (const [id, amount] of this.cart.get())
-            price += amount * (await this.trips.getById(id))!.unitPrice
+            price += amount * (await this.tripsProvider.getById(id))!.unitPrice
 
         this.totalPrice = price
     }
 
-    async buy(tripId: string) {
+    buy(tripId: string) {
         // buy trip
         const amount = this.cart.getAmount(tripId)
-        await this.state.account.buyTrip(tripId, amount)
 
-        // remove from cart
-        this.cart.remove(tripId, amount)
+        this.user.buyTrip(tripId, amount).then(() => {
+            // remove from cart
+            this.cart.remove(tripId, amount)
 
-        await this.updateData()
+            this.updateData().catch(reason => this.notifier.showError(reason))
+        }).catch(reason => this.notifier.showError(reason))
     }
 
     buyAll() {

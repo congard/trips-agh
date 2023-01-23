@@ -1,8 +1,7 @@
 <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav mode="over">
         <mat-selection-list [multiple]="false" id="sidenav-routes">
-            <mat-list-option
-                *ngFor="let route of routes"
+            <mat-list-option *ngFor="let route of getAvailableRoutes()"
                 [value]="route.name"
                 [selected]="isRouteCurrent(route)"
                 (click)="sidenav.toggle()"
@@ -12,6 +11,32 @@
 
             </mat-list-option>
         </mat-selection-list>
+
+        <mat-expansion-panel *ngIf="user.isManager || user.isAdmin"
+            id="sidenav-manage-routes-panel" class="mat-elevation-z0">
+
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Zarządzaj
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-selection-list [multiple]="false" id="sidenav-manage-routes">
+                <mat-list-option *ngFor="let route of getAvailableManageRoutes()"
+                     [value]="route.name"
+                     [selected]="isRouteCurrent(route)"
+                     (click)="sidenav.toggle()"
+                     routerLink="{{ route.url }}">
+
+                    <div class="mat-list-container">
+                        <mat-icon>{{ route.icon }}</mat-icon>
+                        <p>{{ route.name }}</p>
+                    </div>
+
+                </mat-list-option>
+            </mat-selection-list>
+
+        </mat-expansion-panel>
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -23,16 +48,31 @@
             <span id="title">Trips</span>
 
             <div id="nav-routes">
-                <a *ngFor="let route of routes"
+                <a *ngFor="let route of getAvailableRoutes()"
                    mat-ripple
                    routerLink="{{ route.url }}"
                    class="navBtn"
                    [ngClass]="{'selected': isRouteCurrent(route)}">{{ route.name }}</a>
+
+                <a [hidden]="!user.isAdmin && !user.isManager"
+                   [matMenuTriggerFor]="manageMenu"
+                   mat-ripple
+                   class="navBtn">Zarządzaj</a>
+
+                <mat-menu #manageMenu="matMenu">
+                    <button *ngFor="let route of getAvailableManageRoutes()"
+                            [hidden]="!user.isAdmin"
+                            routerLink="{{ route.url }}"
+                            mat-menu-item>
+                        <mat-icon>{{ route.icon }}</mat-icon>
+                        <span>{{ route.name }}</span>
+                    </button>
+                </mat-menu>
             </div>
 
             <div id="spacer"></div>
 
-            <button
+            <button *ngIf="loginService.isLoggedIn"
                 class="navIconBtn"
                 matTooltip="Przypomnienia"
                 mat-icon-button
@@ -43,7 +83,7 @@
 
             </button>
 
-            <button
+            <button *ngIf="loginService.isLoggedIn"
                 class="navIconBtn"
                 matTooltip="Koszyk"
                 mat-icon-button
@@ -54,7 +94,28 @@
 
             </button>
 
-            <button
+            <button *ngIf="!loginService.isLoggedIn"
+                    id="btn-signIn"
+                    mat-stroked-button
+                    routerLink="/sign-in"
+                    class="navIconBtn">
+
+                Sign In
+
+            </button>
+
+            <button *ngIf="!loginService.isLoggedIn"
+                    id="btn-signUp"
+                    mat-flat-button
+                    routerLink="/sign-up"
+                    class="navIconBtn">
+
+                Sign Up
+
+            </button>
+
+            <button *ngIf="loginService.isLoggedIn"
+                [matMenuTriggerFor]="userMenu"
                 class="navIconBtn"
                 matTooltip="Konto"
                 mat-icon-button>
@@ -62,6 +123,17 @@
                 <mat-icon>account_circle</mat-icon>
 
             </button>
+
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>email</mat-icon>
+                    <span>{{ loginService.user?.email }}</span>
+                </button>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Wyloguj się</span>
+                </button>
+            </mat-menu>
         </nav>
 
         <div class="app-routes">

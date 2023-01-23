@@ -1,4 +1,4 @@
-<main *ngIf="(trip | async) as trip">
+<main *ngIf="trip as trip">
     <mat-card>
         <mat-card-header>
             <div mat-card-avatar class="trip-info-avatar">
@@ -17,12 +17,9 @@
 
             <app-rating-overview
                 [rating]="trip.rating"
+                [isRated]="(isRated | async)!"
                 (onRatedEvent)="rateTrip(trip, $event)">
             </app-rating-overview>
-
-            <div>
-
-            </div>
         </mat-card-content>
 
         <mat-card-actions>

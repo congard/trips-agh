@@ -1,0 +1,25 @@
+@import "../variables";
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $textColor;
+    padding: 32px 30%;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    #checkbox-remember-me {
+        align-self: flex-end;
+    }
+
+    #login-controls {
+        display: flex;
+        justify-content: right;
+        width: 100%;
+        margin-top: 24px;
+    }
+}

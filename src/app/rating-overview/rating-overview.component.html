@@ -6,6 +6,7 @@
         class="rating-overview-rating-bar"
         [starsMaxCount]="rating.ratingArray.length"
         [starsCount]="rating.getStars()"
+        [isRated]="isRated"
         (onRatedEvent)="onRatedEvent.emit($event)">
     </app-rating-bar>
 

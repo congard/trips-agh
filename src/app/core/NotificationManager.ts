@@ -1,3 +1,8 @@
+import {Injectable} from "@angular/core";
+
+@Injectable({
+    providedIn: 'root'
+})
 export class NotificationManager {
     private notifications: Notification[] = []
     private nextId = 0
@@ -13,6 +18,10 @@ export class NotificationManager {
         if (index > -1) {
             this.notifications.splice(index, 1);
         }
+    }
+
+    public clear() {
+        this.notifications.splice(0, this.count())
     }
 
     public get() {

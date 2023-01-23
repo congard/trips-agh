@@ -116,15 +116,6 @@ main > mat-card > footer {
   box-shadow: 0 0 6px #f44336 !important;
 }
 
-.removeTrip {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transition: color 0.2s;
-  cursor: pointer;
-  scale: 0.65;
-}
-
 .booking-controls {
   display: flex;
   justify-content: center;

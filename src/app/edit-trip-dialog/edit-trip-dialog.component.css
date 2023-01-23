@@ -1,0 +1,23 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+mat-dialog-content .price {
+  text-align: right;
+}
+mat-dialog-content input.price::-webkit-outer-spin-button,
+mat-dialog-content input.price::-webkit-inner-spin-button,
+mat-dialog-content input.amount::-webkit-outer-spin-button,
+mat-dialog-content input.amount::-webkit-inner-spin-button {
+  display: none;
+}
+mat-dialog-content input.price,
+mat-dialog-content input.amount {
+  -moz-appearance: textfield;
+}
+mat-dialog-content #btn-add-trip {
+  justify-self: right;
+  align-self: flex-end;
+}
+
+/*# sourceMappingURL=edit-trip-dialog.component.css.map */

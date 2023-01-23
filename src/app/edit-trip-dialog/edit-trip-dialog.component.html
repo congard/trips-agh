@@ -1,5 +1,6 @@
-<main class="mat-typography">
-    <h2>Dodaj wycieczkę</h2>
+<h2 mat-dialog-title>Dodaj wycieczkę</h2>
+
+<mat-dialog-content class="mat-typography">
 
     <mat-form-field appearance="fill">
         <mat-label>Nazwa</mat-label>
@@ -101,8 +102,8 @@
         <mat-label>Images</mat-label>
 
         <mat-chip-grid #chipGrid
-            aria-label="Enter images" required
-            [formControl]="imagesControl">
+                       aria-label="Enter images" required
+                       [formControl]="imagesControl">
 
             <mat-chip-row *ngFor="let image of tripData.images"
                           (removed)="removeImage(image)"
@@ -127,6 +128,9 @@
 
     </mat-form-field>
 
-    <button id="btn-add-trip" mat-button (click)="onAdd()">Dodaj</button>
+</mat-dialog-content>
 
-</main>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined">Cofnij</button>
+    <button mat-button (click)="onAdd()" cdkFocusInitial>Dodaj</button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #b3b3b3;
+  padding: 32px 30%;
+}
+main mat-form-field {
+  width: 100%;
+}
+main #checkbox-remember-me {
+  align-self: flex-end;
+}
+main #login-controls {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/*# sourceMappingURL=styles.css.map */

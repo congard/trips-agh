@@ -9,7 +9,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MAT_DATE_LOCALE, MatRippleModule} from "@angular/material/core";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MaterialModule} from '../material.module';
-import {AddTripComponent} from './add-trip/add-trip.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RatingBarComponent} from './rating-bar/rating-bar.component';
 import {ChipsMultiSelectComponent} from './chips-multi-select/chips-multi-select.component';
@@ -27,11 +26,17 @@ import {RatingOverviewComponent} from './rating-overview/rating-overview.compone
 import {firebaseConfig} from "./firebaseConfig";
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {SignInComponent} from './auth/sign-in.component';
+import {AccessErrorComponent} from './access-error/access-error.component';
+import {ManageUsersComponent} from './manage-users/manage-users.component';
+import {ManageTripsComponent} from './manage-trips/manage-trips.component';
+import {EditTripDialog} from './edit-trip-dialog/edit-trip-dialog.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {SignUpComponent} from './auth/sign-up.component';
 
 @NgModule({
     declarations: [
         TripsComponent,
-        AddTripComponent,
         RatingBarComponent,
         ChipsMultiSelectComponent,
         TripFilterComponent,
@@ -43,7 +48,14 @@ import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
         NotificationsDialog,
         TripInfoComponent,
         CarouselComponent,
-        RatingOverviewComponent
+        RatingOverviewComponent,
+        SignInComponent,
+        AccessErrorComponent,
+        ManageUsersComponent,
+        ManageTripsComponent,
+        EditTripDialog,
+        PageNotFoundComponent,
+        SignUpComponent
     ],
     imports: [
         BrowserModule,

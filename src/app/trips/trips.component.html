@@ -2,7 +2,7 @@
     <aside class="mat-elevation-z2">
         <app-trip-filter
             #tripFilter
-            [tripsProvider]="trips"
+            [tripsProvider]="tripsProvider"
             (onFilterChanged)="calcPriceBounds()">
         </app-trip-filter>
     </aside>
@@ -15,14 +15,6 @@
             *ngFor="let trip of tripFilter!.get()"
             [style.background-color]="getAvailableAmount(trip) > 3 ? '' : '#212121'"
             [ngClass]="trip.id == mostExpensiveId ? 'mostExpensiveTrip' : (trip.id == leastExpensiveId ? 'leastExpensiveTrip' : '')">
-
-            <button
-                mat-icon-button
-                class="removeTrip"
-                matTooltip="Usuń"
-                (click)="removeTrip(trip)">
-                <mat-icon>delete</mat-icon>
-            </button>
 
             <picture (click)="showTripInfo(trip)">
                 <img [src]="trip.img" alt="big">
@@ -43,13 +35,13 @@
                 <div class="booking-controls">
                     <button
                         matRipple
-                        [disabled]="getAvailableAmount(trip) == 0"
+                        [disabled]="getAvailableAmount(trip) == 0 || !loginService.isLoggedIn"
                         [ngClass]="{'btnHidden': getAvailableAmount(trip) == 0}"
                         class="cart mat-elevation-z1" (click)="addToCart(trip)"><span>+</span></button>
                     <span>{{ getAvailableAmount(trip) }}</span>
                     <button
                         matRipple
-                        [disabled]="cart.getAmount(trip.id) == 0"
+                        [disabled]="cart.getAmount(trip.id) == 0 || !loginService.isLoggedIn"
                         class="cart mat-elevation-z1" (click)="removeFromCart(trip)"><span>-</span></button>
                 </div>
 

@@ -1,19 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {CartDetails} from "../core/CartDetails";
+import {Cart} from "../core/Cart";
 import {TripsProvider} from "../core/trip/TripsProvider";
 import {Trip} from "../core/trip/Trip";
 
 import {MatDialog} from '@angular/material/dialog';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {AddTripComponent} from "../add-trip/add-trip.component";
-import {TripData} from "../add-trip/TripData";
-import {RatingBarComponent} from "../rating-bar/rating-bar.component";
 import {TripFilterComponent} from "../trip-filter/trip-filter.component";
-import {CartSheet} from "../cart-sheet/cart-sheet.component";
-import {CartData} from "../cart-sheet/CartData";
-import {MatBottomSheet} from "@angular/material/bottom-sheet";
-import {State} from "../core/State";
 import {Router} from "@angular/router";
+import {LoginService} from "../core/LoginService";
+import {User} from "../core/user/User";
+import {Notifier} from "../core/Notifier";
 
 @Component({
     selector: 'app-trips',
@@ -26,19 +22,17 @@ export class TripsComponent implements OnInit, AfterViewInit {
     mostExpensiveId: string = ""
     leastExpensiveId: string = ""
 
-    trips: TripsProvider
-    cart: CartDetails
-
     constructor(
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
         private router: Router,
-        private state: State
+        private user: User,
+        private notifier: Notifier,
+        public tripsProvider: TripsProvider,
+        public cart: Cart,
+        public loginService: LoginService
     ) {
-        this.trips = state.tripsProvider
-        this.cart = state.cart
-
-        this.trips.onDataUpdateListeners.push(() => {
+        tripsProvider.onDataUpdateListeners.push(() => {
             this.tripFilter!.update()
             this.calcPriceBounds()
         })
@@ -62,11 +56,11 @@ export class TripsComponent implements OnInit, AfterViewInit {
             if (this.getAvailableAmount(trip) == 0)
                 return
 
-            if (this.mostExpensiveId.length == 0 || this.trips.getByIdCached(this.mostExpensiveId)!.unitPrice < trip.unitPrice) {
+            if (this.mostExpensiveId.length == 0 || this.tripsProvider.getByIdCached(this.mostExpensiveId)!.unitPrice < trip.unitPrice) {
                 this.mostExpensiveId = trip.id
             }
 
-            if (this.leastExpensiveId.length == 0 || this.trips.getByIdCached(this.leastExpensiveId)!.unitPrice > trip.unitPrice) {
+            if (this.leastExpensiveId.length == 0 || this.tripsProvider.getByIdCached(this.leastExpensiveId)!.unitPrice > trip.unitPrice) {
                 this.leastExpensiveId = trip.id
             }
         })
@@ -81,8 +75,10 @@ export class TripsComponent implements OnInit, AfterViewInit {
     }
 
     addToCart(trip: Trip) {
-        if (this.getAvailableAmount(trip) > 0)
-            this.cart.add(trip.id, 1)
+        if (this.getAvailableAmount(trip) > 0) {
+            this.cart.add(trip.id, 1).catch(reason =>
+                this.notifier.showError(reason))
+        }
 
         if (this.getAvailableAmount(trip) == 0) {
             this.calcPriceBounds()
@@ -90,23 +86,14 @@ export class TripsComponent implements OnInit, AfterViewInit {
     }
 
     removeFromCart(trip: Trip) {
-        if (this.cart.getAmount(trip.id) > 0)
-            this.cart.remove(trip.id, 1)
+        if (this.cart.getAmount(trip.id) > 0) {
+            this.cart.remove(trip.id, 1).catch(reason =>
+                this.notifier.showError(reason))
+        }
 
         if (this.getAvailableAmount(trip) == 1) {
             this.calcPriceBounds()
         }
-    }
-
-    removeTrip(trip: Trip) {
-        this.cart.removeIf(id => id == trip.id)
-        this.trips.remove(trip)
-        this.tripFilter!.update()
-        this.calcPriceBounds()
-
-        this.snackBar.open("Usunięto wycieczkę: " + trip.name, "OK", {
-            duration: 1500
-        })
     }
 
     showTripInfo(trip: Trip) {

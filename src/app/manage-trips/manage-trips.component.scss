@@ -1,0 +1,39 @@
+@import "../styles";
+
+.content-main {
+
+    > mat-card {
+        margin-bottom: 16px;
+
+        > mat-card-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            > #mat-card-content-left {
+                width: 70%;
+                overflow: scroll;
+
+                > #trip-info {
+                    display: grid;
+                    grid-template-columns: 30% 20% 10% 10% 30%;
+                    align-items: center;
+                    width: 100%;
+                    min-width: 512px;
+
+                    > p {
+                        margin: 0;
+                    }
+                }
+            }
+
+            > #mat-card-content-right {
+                display: flex;
+            }
+        }
+    }
+
+    > #btn-add-new-trip {
+        align-self: center;
+    }
+}

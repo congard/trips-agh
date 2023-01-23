@@ -1,0 +1,30 @@
+<main class="content-main">
+    <table matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+        <tr>
+            <th mat-sort-header="email">Email</th>
+            <th mat-sort-header="role">Role</th>
+        </tr>
+
+        <tr *ngFor="let userDetails of sortedData">
+            <td>{{ userDetails.email }}</td>
+            <td>
+                <div class="role-cell" mat-ripple [mat-menu-trigger-for]="roleMenu">
+                    <p>{{ userDetails.role }}</p>
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </div>
+
+                <mat-menu #roleMenu="matMenu">
+                    <button *ngFor="let role of roles"
+                            mat-menu-item
+                            (click)="setRole(userDetails.email, role)">
+
+                        <mat-icon>{{ getIconForRole(role) }}</mat-icon>
+
+                        <span>{{ role }}</span>
+
+                    </button>
+                </mat-menu>
+            </td>
+        </tr>
+    </table>
+</main>

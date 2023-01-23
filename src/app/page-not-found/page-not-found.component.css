@@ -1,0 +1,13 @@
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #b3b3b3;
+  height: calc(100vh - 56px);
+}
+main h1 {
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=page-not-found.component.css.map */
