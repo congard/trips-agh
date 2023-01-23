@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {AngularFireDatabase, AngularFireList} from "@angular/fire/compat/database";
 import {UserDetails} from "./UserDetails";
 import {Role} from "./Role";
-import {Subject, Subscription} from "rxjs";
+import {firstValueFrom, Subject, Subscription} from "rxjs";
 import {TripsProvider} from "../trip/TripsProvider";
 import {PurchasedTripDetails} from "./PurchasedTripDetails";
 
@@ -90,10 +90,22 @@ export class UserProvider {
     }
 
     public addPurchasedTrip(uid: string, tripId: string, date: Date, amount: number) {
-        const update = {
-            [`/users/${uid}/purchased/${tripId}`]: new PurchasedTripDetails(date.getTime(), amount)
-        }
-        return this.db.object("/").update(update)
+        const path = `/users/${uid}/purchased/${tripId}`
+
+        return new Promise<void>((resolve, reject) => {
+            firstValueFrom(this.db.object<PurchasedTripDetails>(path).valueChanges()).then(details => {
+                if (details == null)
+                    details = new PurchasedTripDetails(0, 0)
+
+                const update = {
+                    [path]: new PurchasedTripDetails(date.getTime(), details.amount + amount)
+                }
+
+                this.db.object("/").update(update)
+                    .then(() => resolve())
+                    .catch(reason => reject(reason))
+            }).catch(reason => reject(reason))
+        })
     }
 
     public onUserRegistered(uid: string, email: string) {
