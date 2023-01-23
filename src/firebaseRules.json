@@ -1,0 +1,41 @@
+// WARNING: DO NOT USE THIS SET OF RULES IN REAL WORLD PROJECT
+{
+    "rules": {
+
+        "trips": {
+            ".read": true,
+            ".write": "root.child('users').child(auth.uid).child('role').val() === 'manager' || root.child('users').child(auth.uid).child('role').val() === 'admin'",
+
+            "$tripId": {
+                "comments": {
+                    ".write": "(root.child('users').child(auth.uid).child('role').val() !== 'banned' && root.child('users').child(auth.uid).child('purchased').child($tripId).exists()) || root.child('users').child(auth.uid).child('role').val() === 'manager' || root.child('users').child(auth.uid).child('role').val() === 'admin'"
+                },
+
+                "rating": {
+                    ".write": "!root.child('users').child(auth.uid).child('rated').child($tripId).exists() && root.child('users').child(auth.uid).child('purchased').child($tripId).exists() && root.child('users').child(auth.uid).child('role').val() !== 'banned'"
+                },
+
+                "amount": {
+                    ".write": true // WARNING: VERY DANGEROUS AND UNSAFE
+                }
+            }
+        },
+
+        "users": {
+            ".read": "root.child('users').child(auth.uid).child('role').val() === 'admin'",
+
+            "$userId": {
+                ".read": "auth.uid === $userId",
+                ".write": "auth.uid === $userId",
+
+                "role": {
+                    ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"
+                },
+
+                "purchased": {
+                    ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || root.child('users').child(auth.uid).child('role').val() === 'manager'"
+                }
+            }
+        }
+    }
+}
