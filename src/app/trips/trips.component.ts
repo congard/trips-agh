@@ -4,7 +4,6 @@ import {TripsProvider} from "../core/trip/TripsProvider";
 import {Trip} from "../core/trip/Trip";
 
 import {MatDialog} from '@angular/material/dialog';
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {TripFilterComponent} from "../trip-filter/trip-filter.component";
 import {Router} from "@angular/router";
 import {LoginService} from "../core/LoginService";
@@ -24,7 +23,6 @@ export class TripsComponent implements OnInit, AfterViewInit {
 
     constructor(
         private dialog: MatDialog,
-        private snackBar: MatSnackBar,
         private router: Router,
         private user: User,
         private notifier: Notifier,
